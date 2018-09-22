@@ -24,4 +24,4 @@ def multiply_conv(mat_1, mat_2):
 #     # Données bidon, mais output du bon format demandé
 #     print("2\n1\t2\t3\t4\n5\t6\t7\t8\n9\t10\t11\t12\n13\t14\t15\t16")
 # if '-t' in options:  # On imprime le temps d'exécution
-#     print("4.1347628746")  # Données bidon, mais output du bon format demandé
+#     print("4.1347628746")  # Données bidon, mais output du bon format demandé ok 
