@@ -1,14 +1,14 @@
+#!/usr/local/bin/python3
+
 import sys
-
-# ex_path1 = sys.argv[1] # Path de la première matrice
-# ex_path2 = sys.argv[2] # Path de la deuxième matrice
-
-# TODO: matrix_algo de multiplication de matrices ici (dans le cas de strassen.py, l'algo de Strassen)
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
-
+import time
 from math import ceil, log
+
 from conv import multiply_conv
+from utils import print_matrix, read_matrix
+
+ex_path1 = sys.argv[1]  # Path de la première matrice
+ex_path2 = sys.argv[2]  # Path de la deuxième matrice
 
 
 def add(matrix_a, matrix_b):
@@ -71,16 +71,20 @@ def strassen_recursive(matrix_a, matrix_b, threshold):
         p1 = strassen_recursive(a_result, b_result, threshold)
 
         a_result = add(a21, a22)      # a21 + a22
-        p2 = strassen_recursive(a_result, b11, threshold)  # p2 = (a21+a22) * (b11)
+        # p2 = (a21+a22) * (b11)
+        p2 = strassen_recursive(a_result, b11, threshold)
 
         b_result = subtract(b12, b22)  # b12 - b22
-        p3 = strassen_recursive(a11, b_result, threshold)  # p3 = (a11) * (b12 - b22)
+        # p3 = (a11) * (b12 - b22)
+        p3 = strassen_recursive(a11, b_result, threshold)
 
         b_result = subtract(b21, b11)  # b21 - b11
-        p4 = strassen_recursive(a22, b_result, threshold)   # p4 = (a22) * (b21 - b11)
+        # p4 = (a22) * (b21 - b11)
+        p4 = strassen_recursive(a22, b_result, threshold)
 
         a_result = add(a11, a12)      # a11 + a12
-        p5 = strassen_recursive(a_result, b22, threshold)  # p5 = (a11+a12) * (b22)
+        # p5 = (a11+a12) * (b22)
+        p5 = strassen_recursive(a_result, b22, threshold)
 
         a_result = subtract(a21, a11)  # a21 - a11
         b_result = add(b11, b12)      # b11 + b12
@@ -139,8 +143,18 @@ def strassen(matrix_a, matrix_b, threshold=1):
             c_matrix[i][j] = c_prep[i][j]
     return c_matrix
 
-# options = sys.argv[3:]
-# if '-p' in options: # On imprime la matrice résultat
-#     print("2\n1\t2\t3\t4\n5\t6\t7\t8\n9\t10\t11\t12\n13\t14\t15\t16") # Données bidon, mais output du bon format demandé
-# if '-t' in options: # On imprime le temps d'exécution
-#     print("4.1347628746") # Données bidon, mais output du bon format demandé
+
+if __name__ == "__main__":
+    a = read_matrix(ex_path1)
+    b = read_matrix(ex_path2)
+
+    start = time.time()
+    matrix = strassen(a, b)
+    duration = (time.time() - start) * 1000
+
+    options = sys.argv[3:]
+    if '-p' in options:  # On imprime la matrice résultat
+        # Données bidon, mais output du bon format demandé
+        print_matrix(matrix)
+    if '-t' in options:  # On imprime le temps d'exécution
+        print(duration)  # Données bidon, mais output du bon format demandé ok

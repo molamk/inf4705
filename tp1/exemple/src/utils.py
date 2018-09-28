@@ -10,5 +10,7 @@ def read_matrix(file_path):
 
 
 def print_matrix(matrix):
+    print(len(matrix))
     for line in matrix:
-        print(line)
+        str_line = '\t'.join([str(x) for x in line])
+        print(str_line)
