@@ -12,11 +12,11 @@ germe = int(sys.argv[3])
 
 random.seed(germe)
 
-with open(nom, 'w') as f:
+with open(nom, 'w+') as f:
     f.write(str(N)+'\n')
     for i in range(2**N):
         for j in range(2**N):
             f.write(str(random.randint(0, 10))+'\t')
         f.write('\n')
-        
+
 f.close()

@@ -1,5 +1,5 @@
 def read_matrix(file_path):
-    with open(file_path) as f:
+    with open(f'./exemplaires/{file_path}') as f:
         read_data = f.read()
         line = read_data.split('\n')
         matrix = list(
