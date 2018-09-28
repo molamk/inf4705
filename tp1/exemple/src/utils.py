@@ -7,3 +7,8 @@ def read_matrix(file_path):
         matrix = list(filter(lambda x: len(x) >= 2, matrix))
     f.closed
     return matrix
+
+
+def print_matrix(matrix):
+    for line in matrix:
+        print(line)
