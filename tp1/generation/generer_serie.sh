@@ -11,6 +11,7 @@ germe=$3
 
 for((N=$Nstart;N<=$Nend;N++)); do
     for I in {1..5}; do
+      echo "generation $N"
 	python3 generer_exemplaire.py $N ../exemple/exemplaires/serie$N/"ex_"$N"."$I $((germe+$I))
     done
 done

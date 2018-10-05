@@ -10,6 +10,8 @@ for algo in {"conv","strassen","strassenSeuil"}; do
 	    for ex2 in $(ls "exemplaires/$serie" | tail -n $counter); do
 		t=$(./tp.sh -a $algo -e $serie/$ex1 $serie/$ex2 -t)
 		# touch ./resultats/${algo}_${serie}.csv
+		echo Algo ${algo} Serie ${serie} Counter ${counter} Ex1 ${ex1} Ex2 ${ex2}
+
 		echo $t >> ./resultats/${algo}_${serie}.csv
 	    done
 	    ((counter--))

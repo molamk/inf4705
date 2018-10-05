@@ -5,10 +5,16 @@
 
 import random
 import sys
-
+import os
 N = int(sys.argv[1])
 nom = sys.argv[2]
 germe = int(sys.argv[3])
+
+parts = nom.split('/')
+directory = '/'.join(parts[:len(parts) - 1])
+
+if not os.path.exists(directory):
+    os.makedirs(directory)
 
 random.seed(germe)
 
