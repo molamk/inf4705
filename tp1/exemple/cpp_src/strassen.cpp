@@ -42,57 +42,41 @@ void strassenSplit(vector<vector<float>> &source,
 
     for (size_t i = 0; i < half; i++)
     {
-        vector<float> x11Row;
-        vector<float> x12Row;
-        vector<float> x21Row;
-        vector<float> x22Row;
         for (size_t j = 0; j < half; j++)
         {
-            x11Row.push_back(source[i][j]);
-            x12Row.push_back(source[i][j + half]);
-            x21Row.push_back(source[i + half][j]);
-            x22Row.push_back(source[i + half][j + half]);
+            x11[i][j] = source[i][j];
+            x12[i][j] = source[i][j + half];
+            x21[i][j] = source[i + half][j];
+            x22[i][j] = source[i + half][j + half];
         }
-        x11.push_back(x11Row);
-        x12.push_back(x12Row);
-        x21.push_back(x21Row);
-        x22.push_back(x22Row);
     }
 }
 
-vector<vector<float>> strassenMerge(
+void strassenMerge(
     vector<vector<float>> &c11,
     vector<vector<float>> &c12,
     vector<vector<float>> &c21,
-    vector<vector<float>> &c22)
+    vector<vector<float>> &c22,
+    vector<vector<float>> &target)
 {
-    vector<vector<float>> result;
-
     int half = c11.size();
 
-    for (size_t i = 0; i < half * 2; i++)
+    for (size_t i = 0; i < half; i++)
     {
-        vector<float> row;
-        for (size_t j = 0; j < half * 2; j++)
+        for (size_t j = 0; j < half; j++)
         {
-            if (i < half && j < half)
-                row.push_back(c11[i][j]);
-            else if (i < half && j >= half)
-                row.push_back(c12[i][j - half]);
-            else if (i >= half && j < half)
-                row.push_back(c21[i - half][j]);
-            else if (i >= half && j >= half)
-                row.push_back(c22[i - half][j - half]);
+            target[i][j] = c11[i][j];
+            target[i][j + half] = c12[i][j];
+            target[i + half][j] = c21[i][j];
+            target[i + half][j + half] = c22[i][j];
         }
-        result.push_back(row);
     }
-
-    return result;
 }
 
 vector<vector<float>> rec(vector<vector<float>> mat1, vector<vector<float>> mat2, uint64_t threshold)
 {
     int n = mat1.size();
+    int half = n / 2;
 
     if (n <= threshold)
     {
@@ -100,17 +84,21 @@ vector<vector<float>> rec(vector<vector<float>> mat1, vector<vector<float>> mat2
     }
     else
     {
-        vector<vector<float>> a11;
-        vector<vector<float>> a12;
-        vector<vector<float>> a21;
-        vector<vector<float>> a22;
+        vector<float> inside(half);
+        vector<vector<float>> a11(half, inside);
+        vector<vector<float>> a12(half, inside);
+        vector<vector<float>> a21(half, inside);
+        vector<vector<float>> a22(half, inside);
         strassenSplit(mat1, a11, a12, a21, a22);
 
-        vector<vector<float>> b11;
-        vector<vector<float>> b12;
-        vector<vector<float>> b21;
-        vector<vector<float>> b22;
+        vector<vector<float>> b11(half, inside);
+        vector<vector<float>> b12(half, inside);
+        vector<vector<float>> b21(half, inside);
+        vector<vector<float>> b22(half, inside);
         strassenSplit(mat2, b11, b12, b21, b22);
+
+        // vector<vector<float>> aResult(half, inside);
+        // vector<vector<float>> bResult(half, inside);
 
         vector<vector<float>> m1 = rec(addMatrices(a11, a22), addMatrices(b11, b22), threshold);
         vector<vector<float>> m2 = rec(addMatrices(a21, a22), b11, threshold);
@@ -132,7 +120,11 @@ vector<vector<float>> rec(vector<vector<float>> mat1, vector<vector<float>> mat2
         vector<vector<float>> c22_2 = addMatrices(c22_1, m6);
         vector<vector<float>> c22 = substractMatrices(c22_2, m2);
 
-        return strassenMerge(c11, c12, c21, c22);
+        vector<float> targetInside(n);
+        vector<vector<float>> target(n, targetInside);
+        strassenMerge(c11, c12, c21, c22, target);
+
+        return target;
     }
 }
 
