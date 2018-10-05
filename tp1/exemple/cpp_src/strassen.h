@@ -9,13 +9,15 @@
 
 using namespace std;
 
-vector<vector<float>> addMatrices(
+void addMatrices(
     vector<vector<float>> &m1,
-    vector<vector<float>> &m2);
+    vector<vector<float>> &m2,
+    vector<vector<float>> &x);
 
-vector<vector<float>> substractMatrices(
+void substractMatrices(
     vector<vector<float>> &m1,
-    vector<vector<float>> &m2);
+    vector<vector<float>> &m2,
+    vector<vector<float>> &x);
 
 void strassenSplit(vector<vector<float>> &source,
                    vector<vector<float>> &x11,
@@ -23,14 +25,14 @@ void strassenSplit(vector<vector<float>> &source,
                    vector<vector<float>> &x21,
                    vector<vector<float>> &x22);
 
-vector<vector<float>> strassenMerge(
+void strassenMerge(
     vector<vector<float>> &c11,
     vector<vector<float>> &c12,
     vector<vector<float>> &c21,
-    vector<vector<float>> &c22);
+    vector<vector<float>> &c22,
+    vector<vector<float>> &target);
 
-vector<vector<float>> rec(vector<vector<float>> mat1, vector<vector<float>> mat2, uint64_t threshold);
+void rec(vector<vector<float>> &mat1, vector<vector<float>> &mat2, uint64_t threshold, vector<vector<float>> &result, int size);
 
 vector<vector<float>> multiplyStrassen(vector<vector<float>> &mat1, vector<vector<float>> &mat2);
-
 #endif
