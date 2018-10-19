@@ -8,12 +8,12 @@ bool isFileExists(const std::string &name)
 
 string formatDurationFileName(int size, string algo)
 {
-    return "../resultats/" + algo + "_serie" + to_string(size) + ".csv";
+    return "./resultats/" + algo + "_serie" + to_string(size) + ".csv";
 }
 
 string formatMatrixFileName(string rawFileName)
 {
-    return "../exemplaires/" + rawFileName;
+    return "./exemplaires/" + rawFileName;
 }
 
 string readFileRaw(const string &fileName)
@@ -46,21 +46,16 @@ float stringToFloat(const string &str)
     return atof(str.c_str());
 }
 
-vector<vector<float>> formatMatrixFromRaw(const string &rawMatrix)
+vector<int> formatMatrixFromRaw(const string &rawMatrix)
 {
-    vector<vector<float>> matrix;
+    vector<int> matrix;
     vector<string> rows = split(rawMatrix, '\n');
 
     for (size_t rowIdx = 1; rowIdx < rows.size(); rowIdx++)
     {
         vector<string> rawNumbers = split(rows[rowIdx], '\t');
-        vector<float> numbers;
-
         for (size_t numberIdx = 0; numberIdx < rawNumbers.size(); numberIdx++)
-        {
-            numbers.push_back(atof(rawNumbers[numberIdx].c_str()));
-        }
-        matrix.push_back(numbers);
+            matrix.push_back(atoi(rawNumbers[numberIdx].c_str()));
     }
 
     return matrix;
@@ -82,22 +77,21 @@ vector<float> getDurations(int size, string &algo)
     return durations;
 }
 
-vector<vector<float>> readMatrixFromFile(const string &filePath)
+vector<int> readMatrixFromFile(const string &filePath)
 {
     string rawMatrix = readFileRaw(filePath);
     return formatMatrixFromRaw(rawMatrix);
 }
 
-void printMatrix(const vector<vector<float>> &matrix)
+void printMatrix(const vector<int> &matrix)
 {
-    cout << matrix.size() << endl;
-    for (size_t rowIdx = 0; rowIdx < matrix.size(); rowIdx++)
-    {
+    int totalSize = matrix.size();
+    int totalRows = (int)sqrt(totalSize);
 
-        for (size_t numberIdx = 0; numberIdx < matrix[rowIdx].size(); numberIdx++)
-        {
-            cout << matrix[rowIdx][numberIdx] << '\t';
-        }
+    for (size_t rowIdx = 0; rowIdx < totalRows; rowIdx++)
+    {
+        for (size_t numberIdx = 0; numberIdx < totalRows; numberIdx++)
+            cout << matrix[rowIdx * totalRows + numberIdx] << '\t';
         cout << endl;
     }
 }

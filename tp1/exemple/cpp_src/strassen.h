@@ -8,43 +8,45 @@
 #include <functional>
 
 using namespace std;
-using f_matrix = vector<vector<float>>;
 
 class MatrixAllocator
 {
   public:
     MatrixAllocator();
     MatrixAllocator(size_t size);
-    f_matrix load(int size);
+    vector<int> load(int size);
 
   private:
-    f_matrix m;
+    vector<int> m;
 };
 
 void addMatrices(
-    vector<vector<float>> &m1,
-    vector<vector<float>> &m2,
-    vector<vector<float>> &x);
+    vector<int> &m1,
+    vector<int> &m2,
+    vector<int> &x);
 
 void substractMatrices(
-    vector<vector<float>> &m1,
-    vector<vector<float>> &m2,
-    vector<vector<float>> &x);
+    vector<int> &m1,
+    vector<int> &m2,
+    vector<int> &x);
 
-void strassenSplit(vector<vector<float>> &source,
-                   vector<vector<float>> &x11,
-                   vector<vector<float>> &x12,
-                   vector<vector<float>> &x21,
-                   vector<vector<float>> &x22);
+void strassenSplit(vector<int> &source,
+                   vector<int> &x11,
+                   vector<int> &x12,
+                   vector<int> &x21,
+                   vector<int> &x22,
+                   int size);
 
 void strassenMerge(
-    vector<vector<float>> &c11,
-    vector<vector<float>> &c12,
-    vector<vector<float>> &c21,
-    vector<vector<float>> &c22,
-    vector<vector<float>> &target);
+    vector<int> &c11,
+    vector<int> &c12,
+    vector<int> &c21,
+    vector<int> &c22,
+    vector<int> &target,
+    int size);
 
-void rec(vector<vector<float>> &mat1, vector<vector<float>> &mat2, uint64_t threshold, vector<vector<float>> &result, int size, MatrixAllocator *m_allocator);
+void rec(vector<int> &mat1, vector<int> &mat2, uint64_t threshold, vector<int> &result, int size);
+// void rec(vector<int> &mat1, vector<int> &mat2, uint64_t threshold, vector<int> &result, int size, MatrixAllocator *m_allocator);
 
-vector<vector<float>> multiplyStrassen(vector<vector<float>> &mat1, vector<vector<float>> &mat2);
+vector<int> multiplyStrassen(vector<int> &mat1, vector<int> &mat2);
 #endif

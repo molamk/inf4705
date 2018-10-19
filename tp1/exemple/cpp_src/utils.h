@@ -7,6 +7,8 @@
 #include <sstream>
 #include <vector>
 #include <sys/stat.h>
+#include <cmath>
+
 
 using namespace std;
 
@@ -22,11 +24,11 @@ vector<string> split(const string &s, char delim);
 
 float stringToFloat(const string &str);
 
-vector<vector<float>> formatMatrixFromRaw(const string &rawMatrix);
+vector<int> formatMatrixFromRaw(const string &rawMatrix);
 
-void printMatrix(const vector<vector<float>> &matrix);
+void printMatrix(const vector<int> &matrix);
 
-vector<vector<float>> readMatrixFromFile(const string &filePath);
+vector<int> readMatrixFromFile(const string &filePath);
 
 vector<float> getDurations(int size, string &algo);
 

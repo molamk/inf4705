@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-from utils import mean_duration, show_graph
+from utils import mean_duration, show_graph_puissance, show_graph_puissance_algo, show_graph_rapport
 from os import listdir
 
 
@@ -23,7 +23,16 @@ def main():
     for x in algo_map:
         algo_map[x].sort()
 
-    show_graph(algo_map)
+        # print(x)
+        # #algo_map[x] = list(map(lambda x: x * 1000, algo_map[x]))
+        # print(algo_map[x])
+        # print()
+
+    # show_graph_puissance(algo_map)
+    show_graph_puissance_algo(algo_map['conv'], 'Conventionnel')
+
+    # def hypothesis(x): return x**3
+    # show_graph_rapport(algo_map['strassenSeuil'], hypothesis, 'strassenSeuil')
 
 
 if __name__ == '__main__':

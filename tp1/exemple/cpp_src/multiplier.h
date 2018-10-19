@@ -8,6 +8,6 @@
 
 using namespace std;
 
-int multiply(int argc, char *argv[], function<vector<vector<float>>(vector<vector<float>>&, vector<vector<float>>&)> multiplier);
+int multiply(int argc, char *argv[], function<vector<int>(vector<int> &, vector<int> &)> multiplier);
 
 #endif

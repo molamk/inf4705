@@ -2,6 +2,7 @@
 
 import sys
 import time
+import numpy as np
 
 from utils import print_matrix, read_matrix
 
@@ -11,6 +12,7 @@ ex_path2 = sys.argv[2]  # Path de la deuxième matrice
 
 def multiply_conv(mat_1, mat_2):
     length = len(mat_1)
+    # result = np.zeros((length, length))
     result = [0] * length
     result = list(map(lambda x: [0] * length, result))
 

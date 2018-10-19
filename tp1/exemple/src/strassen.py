@@ -2,6 +2,7 @@
 
 import sys
 import time
+import numpy as np
 
 from conv import multiply_conv
 from utils import print_matrix, read_matrix
@@ -11,77 +12,63 @@ ex_path2 = sys.argv[2]  # Path de la deuxième matrice
 
 
 def add(matrix_a, matrix_b):
-    rng = range(len(matrix_a))
-    matrix_c = [[0 for j in rng] for i in rng]
-    for i in rng:
-        for j in rng:
-            matrix_c[i][j] = matrix_a[i][j] + matrix_b[i][j]
-    return matrix_c
+    return [list(map(lambda x, y: x + y, matrix_a[i], matrix_b[i])) for i in range(len(matrix_a))]
 
 
 def subtract(matrix_a, matrix_b):
-    rng = range(len(matrix_a))
-    matrix_c = [[0 for j in rng] for i in rng]
-    for i in rng:
-        for j in rng:
-            matrix_c[i][j] = matrix_a[i][j] - matrix_b[i][j]
-    return matrix_c
+    return [list(map(lambda x, y: x - y, matrix_a[i], matrix_b[i])) for i in range(len(matrix_a))]
 
 
 def strassen_recursive(matrix_a, matrix_b, threshold):
-    n = len(matrix_a)
-
-    if n <= threshold:
+    total_length = len(matrix_a)
+    if total_length <= threshold:
         return multiply_conv(matrix_a, matrix_b)
     else:
-        new_size = n // 2
+        half = total_length // 2
+        a_11 = [[None for _ in range(half)] for __ in range(half)]
+        a_12 = [[None for _ in range(half)] for __ in range(half)]
+        a_21 = [[None for _ in range(half)] for __ in range(half)]
+        a_22 = [[None for _ in range(half)] for __ in range(half)]
+        b_11 = [[None for _ in range(half)] for __ in range(half)]
+        b_12 = [[None for _ in range(half)] for __ in range(half)]
+        b_21 = [[None for _ in range(half)] for __ in range(half)]
+        b_22 = [[None for _ in range(half)] for __ in range(half)]
 
-        rng = range(new_size)
+        for i in range(half):
+            for j in range(half):
+                a_11[i][j] = matrix_a[i][j]
+                a_12[i][j] = matrix_a[i][j + half]
+                a_21[i][j] = matrix_a[i + half][j]
+                a_22[i][j] = matrix_a[i + half][j + half]
 
-        a11 = [[0] * new_size for i in rng]
-        a12 = [[0] * new_size for i in rng]
-        a21 = [[0] * new_size for i in rng]
-        a22 = [[0] * new_size for i in rng]
-        b11 = [[0] * new_size for i in rng]
-        b12 = [[0] * new_size for i in rng]
-        b21 = [[0] * new_size for i in rng]
-        b22 = [[0] * new_size for i in rng]
+                b_11[i][j] = matrix_b[i][j]
+                b_12[i][j] = matrix_b[i][j + half]
+                b_21[i][j] = matrix_b[i + half][j]
+                b_22[i][j] = matrix_b[i + half][j + half]
 
-        # dividing the matrices in 4 sub-matrices:
-        for i in rng:
-            for j in rng:
-                a11[i][j] = matrix_a[i][j]
-                a12[i][j] = matrix_a[i][j + new_size]
-                a21[i][j] = matrix_a[i + new_size][j]
-                a22[i][j] = matrix_a[i + new_size][j + new_size]
+        m_1 = strassen_recursive(add(a_11, a_22), add(b_11, b_22), threshold)
+        m_2 = strassen_recursive(add(a_21, a_22), b_11, threshold)
+        m_3 = strassen_recursive(a_11, subtract(b_12, b_22), threshold)
+        m_4 = strassen_recursive(a_22, subtract(b_21, b_11), threshold)
+        m_5 = strassen_recursive(add(a_11, a_12), b_22, threshold)
+        m_6 = strassen_recursive(subtract(a_21, a_11),
+                                 add(b_11, b_12), threshold)
+        m_7 = strassen_recursive(subtract(a_12, a_22),
+                                 add(b_21, b_22), threshold)
 
-                b11[i][j] = matrix_b[i][j]
-                b12[i][j] = matrix_b[i][j + new_size]
-                b21[i][j] = matrix_b[i + new_size][j]
-                b22[i][j] = matrix_b[i + new_size][j + new_size]
+        c_11 = add(subtract(add(m_1, m_4), m_5), m_7)
+        c_12 = add(m_3, m_5)
+        c_21 = add(m_2, m_4)
+        c_22 = add(add(subtract(m_1, m_2), m_3), m_6)
 
-        p1 = strassen_recursive(add(a11, a22), add(b11, b22), threshold)
-        p2 = strassen_recursive(add(a21, a22), b11, threshold)
-        p3 = strassen_recursive(a11, subtract(b12, b22), threshold)
-        p4 = strassen_recursive(a22, subtract(b21, b11), threshold)
-        p5 = strassen_recursive(add(a11, a12), b22, threshold)
-        p6 = strassen_recursive(subtract(a21, a11), add(b11, b12), threshold)
-        p7 = strassen_recursive(subtract(a12, a22), add(b21, b22), threshold)
-
-        c12 = add(p3, p5)  # c12 = p3 + p5
-        c21 = add(p2, p4)  # c21 = p2 + p4
-        c11 = subtract(add(add(p1, p4), p7), p5)  # c11 = p1 + p4 - p5 + p7
-        c22 = subtract(add(add(p1, p3), p6), p2)  # c22 = p1 + p3 - p2 + p6
-
-        # Grouping the results obtained in a single matrix:
-        matrix_c = [[0] * n for i in range(n)]
-        for i in range(0, new_size):
-            for j in range(0, new_size):
-                matrix_c[i][j] = c11[i][j]
-                matrix_c[i][j + new_size] = c12[i][j]
-                matrix_c[i + new_size][j] = c21[i][j]
-                matrix_c[i + new_size][j + new_size] = c22[i][j]
-        return matrix_c
+        c = [[0 for x in range(total_length)] for y in range(total_length)]
+        for i in range(half):
+            for j in range(half):
+                c[i][j] = c_11[i][j]
+                c[i][j + half] = c_12[i][j]
+                c[i + half][j] = c_21[i][j]
+                c[i + half][j + half] = c_22[i][j]
+        return c
 
 
 def strassen(matrix_a, matrix_b, threshold=1):

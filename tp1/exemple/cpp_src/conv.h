@@ -5,9 +5,10 @@
 #include "conv.h"
 #include "ProgramArguments.h"
 #include "multiplier.h"
+#include <cmath>
 
 using namespace std;
 
-vector<vector<float>> multiplyConv(vector<vector<float>> &mat1, vector<vector<float>> &mat2);
+vector<int> multiplyConv(vector<int> &mat1, vector<int> &mat2);
 
 #endif

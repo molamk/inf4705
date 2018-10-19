@@ -10,11 +10,11 @@ main(int argc, char *argv[])
         return -1;
     }
 
-    vector<vector<float>> matrix1 = readMatrixFromFile(options.getFirstMatrixPath());
-    vector<vector<float>> matrix2 = readMatrixFromFile(options.getSecondMatrixPath());
+    vector<int> matrix1 = readMatrixFromFile(options.getFirstMatrixPath());
+    vector<int> matrix2 = readMatrixFromFile(options.getSecondMatrixPath());
 
     string algorithm = options.getAlgorithm();
-    vector<vector<float>> result;
+    vector<int> result;
 
     clock_t begin_time;
 
@@ -34,14 +34,14 @@ main(int argc, char *argv[])
         result = multiplyStrassenSeuil(matrix1, matrix2);
     }
 
-    const double duration = (double(clock() - begin_time) / CLOCKS_PER_SEC);
+    double duration = (double(clock() - begin_time) / CLOCKS_PER_SEC);
 
     if (options.isPrintMatrix())
         printMatrix(result);
 
     cout.precision(20);
     if (options.isPrintTime())
-        cout << fixed << duration << endl;
+        cout << fixed << (duration * 1000) << endl;
 
     return 0;
 }

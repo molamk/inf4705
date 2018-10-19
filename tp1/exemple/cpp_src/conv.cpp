@@ -4,24 +4,23 @@
 
 using namespace std;
 
-vector<vector<float>> multiplyConv(vector<vector<float>> &mat1, vector<vector<float>> &mat2)
+vector<int> multiplyConv(vector<int> &mat1, vector<int> &mat2)
 {
-    vector<vector<float>> result;
     int len = mat1.size();
+    vector<int> result(len);
+    int rowSize = (int)sqrt(len);
 
-    for (size_t i = 0; i < len; i++)
+    for (size_t i = 0; i < rowSize; i++)
     {
-        vector<float> row;
-        for (size_t j = 0; j < len; j++)
+        for (size_t j = 0; j < rowSize; j++)
         {
-            float curr = 0;
-            for (size_t k = 0; k < len; k++)
+            int curr = 0;
+            for (size_t k = 0; k < rowSize; k++)
             {
-                curr += mat1[i][k] * mat2[k][j];
+                curr += mat1[i * rowSize + k] * mat2[k * rowSize + j];
             }
-            row.push_back(curr);
+            result[i * rowSize + j] = curr;
         }
-        result.push_back(row);
     }
 
     return result;

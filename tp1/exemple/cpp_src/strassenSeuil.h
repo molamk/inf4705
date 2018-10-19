@@ -5,6 +5,6 @@
 
 using namespace std;
 
-vector<vector<float>> multiplyStrassenSeuil(vector<vector<float>> &mat1, vector<vector<float>> &mat2);
+vector<int> multiplyStrassenSeuil(vector<int> &mat1, vector<int> &mat2);
 
 #endif

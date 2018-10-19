@@ -1,7 +1,7 @@
 #include "multiplier.h"
 using namespace std;
 
-int multiply(int argc, char *argv[], function<vector<vector<float>>(vector<vector<float>> &, vector<vector<float>> &)> multiplier)
+int multiply(int argc, char *argv[], function<vector<int>(vector<int> &, vector<int> &)> multiplier)
 {
     ProgramArguments options(argc, argv);
 
@@ -11,11 +11,11 @@ int multiply(int argc, char *argv[], function<vector<vector<float>>(vector<vecto
         return -1;
     }
 
-    vector<vector<float>> matrix1 = readMatrixFromFile(options.getFirstMatrixPath());
-    vector<vector<float>> matrix2 = readMatrixFromFile(options.getSecondMatrixPath());
+    vector<int> matrix1 = readMatrixFromFile(options.getFirstMatrixPath());
+    vector<int> matrix2 = readMatrixFromFile(options.getSecondMatrixPath());
 
     const clock_t begin_time = clock();
-    vector<vector<float>> result = multiplier(matrix1, matrix2);
+    vector<int> result = multiplier(matrix1, matrix2);
     const double duration = (double(clock() - begin_time) / CLOCKS_PER_SEC);
 
     if (options.isPrintMatrix())
@@ -23,7 +23,7 @@ int multiply(int argc, char *argv[], function<vector<vector<float>>(vector<vecto
 
     cout.precision(20);
     if (options.isPrintTime())
-        cout << fixed << duration << endl;
+        cout << fixed << (duration * 1000) << endl;
 
     return 0;
 }

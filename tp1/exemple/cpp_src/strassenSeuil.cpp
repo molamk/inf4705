@@ -2,15 +2,13 @@
 
 using namespace std;
 
-vector<vector<float>> multiplyStrassenSeuil(vector<vector<float>> &mat1, vector<vector<float>> &mat2)
+vector<int> multiplyStrassenSeuil(vector<int> &mat1, vector<int> &mat2)
 {
     int size = mat1.size();
-    vector<float> x(size);
-    vector<vector<float>> xx(size, x);
+    vector<int> result(size);
+    uint64_t threshold = size / 2;
 
-    MatrixAllocator m_allocator(mat1.size());
+    rec(mat1, mat2, threshold, result, size);
 
-    rec(mat1, mat2, 150, xx, size, &m_allocator);
-
-    return xx;
+    return result;
 }
