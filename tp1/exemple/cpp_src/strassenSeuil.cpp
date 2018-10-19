@@ -7,7 +7,10 @@ vector<vector<float>> multiplyStrassenSeuil(vector<vector<float>> &mat1, vector<
     int size = mat1.size();
     vector<float> x(size);
     vector<vector<float>> xx(size, x);
-    rec(mat1, mat2, 150, xx, size);
+
+    MatrixAllocator m_allocator(mat1.size());
+
+    rec(mat1, mat2, 150, xx, size, &m_allocator);
 
     return xx;
 }

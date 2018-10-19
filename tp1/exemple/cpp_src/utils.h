@@ -24,7 +24,7 @@ float stringToFloat(const string &str);
 
 vector<vector<float>> formatMatrixFromRaw(const string &rawMatrix);
 
-void printMatrix(vector<vector<float>> &matrix);
+void printMatrix(const vector<vector<float>> &matrix);
 
 vector<vector<float>> readMatrixFromFile(const string &filePath);
 

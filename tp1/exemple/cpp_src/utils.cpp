@@ -8,12 +8,12 @@ bool isFileExists(const std::string &name)
 
 string formatDurationFileName(int size, string algo)
 {
-    return "./resultats/" + algo + "_serie" + to_string(size) + ".csv";
+    return "../resultats/" + algo + "_serie" + to_string(size) + ".csv";
 }
 
 string formatMatrixFileName(string rawFileName)
 {
-    return "./exemplaires/" + rawFileName;
+    return "../exemplaires/" + rawFileName;
 }
 
 string readFileRaw(const string &fileName)
@@ -88,7 +88,7 @@ vector<vector<float>> readMatrixFromFile(const string &filePath)
     return formatMatrixFromRaw(rawMatrix);
 }
 
-void printMatrix(vector<vector<float>> &matrix)
+void printMatrix(const vector<vector<float>> &matrix)
 {
     cout << matrix.size() << endl;
     for (size_t rowIdx = 0; rowIdx < matrix.size(); rowIdx++)

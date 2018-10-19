@@ -8,6 +8,18 @@
 #include <functional>
 
 using namespace std;
+using f_matrix = vector<vector<float>>;
+
+class MatrixAllocator
+{
+  public:
+    MatrixAllocator();
+    MatrixAllocator(size_t size);
+    f_matrix load(int size);
+
+  private:
+    f_matrix m;
+};
 
 void addMatrices(
     vector<vector<float>> &m1,
@@ -32,7 +44,7 @@ void strassenMerge(
     vector<vector<float>> &c22,
     vector<vector<float>> &target);
 
-void rec(vector<vector<float>> &mat1, vector<vector<float>> &mat2, uint64_t threshold, vector<vector<float>> &result, int size);
+void rec(vector<vector<float>> &mat1, vector<vector<float>> &mat2, uint64_t threshold, vector<vector<float>> &result, int size, MatrixAllocator *m_allocator);
 
 vector<vector<float>> multiplyStrassen(vector<vector<float>> &mat1, vector<vector<float>> &mat2);
 #endif
