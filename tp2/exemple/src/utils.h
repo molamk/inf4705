@@ -20,5 +20,6 @@ bool comparePairs(const pair<int, int> &a, const pair<int, int> &b);
 void sortSticks(vector<pair<int, int>> &v);
 void printVector(vector<int> &v);
 void printSticks(vector<pair<int, int>> &v);
+void printMatrix(vector<vector<int>> &m);
 
 #endif

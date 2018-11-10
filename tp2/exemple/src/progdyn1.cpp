@@ -3,17 +3,14 @@
 void backTrack(int idx,
                vector<int> &indeces,
                vector<pair<int, int>> &inputSticks,
-               vector<pair<int, int>> &outputSticks)
+               vector<int> &result)
 {
-    int target = indeces[idx];
-    if (target < 0)
-    {
-        outputSticks.push_back(inputSticks[-target]);
-    }
+    if (indeces[idx] < 0)
+        result.push_back(inputSticks[-indeces[idx]].first);
     else
     {
-        backTrack(target, indeces, inputSticks, outputSticks);
-        backTrack(idx - target, indeces, inputSticks, outputSticks);
+        backTrack(indeces[idx], indeces, inputSticks, result);
+        backTrack(idx - indeces[idx], indeces, inputSticks, result);
     }
 }
 
@@ -32,11 +29,8 @@ void solveProgDyn1(Problem &p, vector<int> &v)
     }
 
     for (int j = 0; j < p.weightLimit; j++)
-    {
         if (numbersOfSticks[j] != 1)
-        {
             for (int i = 0; i < (int)(j / 2); i++)
-            {
                 if (numbersOfSticks[j] > numbersOfSticks[i] + numbersOfSticks[j - i] &&
                     // Handle overflow
                     numbersOfSticks[i] != __INT_MAX__ && numbersOfSticks[j - i] != __INT_MAX__)
@@ -44,14 +38,11 @@ void solveProgDyn1(Problem &p, vector<int> &v)
                     numbersOfSticks[j] = numbersOfSticks[i] + numbersOfSticks[j - i];
                     indeces[j] = i;
                 }
-            }
-        }
-    }
 
-    vector<pair<int, int>> result;
-    backTrack(p.weightLimit - 1, indeces, p.sticks, result);
-    for (pair<int, int> r : result)
-    {
-        v.push_back(r.second);
-    }
+    int startIdx = p.weightLimit - 1;
+
+    while (indeces[startIdx] == 0 && startIdx >= 0)
+        startIdx--;
+
+    backTrack(startIdx, indeces, p.sticks, v);
 }

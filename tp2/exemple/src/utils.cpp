@@ -75,3 +75,13 @@ void printSticks(vector<pair<int, int>> &v)
     for (int i = 0; i < v.size(); i++)
         cout << "Number:\t" << v[i].first << "\tWeight:\t" << v[i].second << endl;
 }
+
+void printMatrix(vector<vector<int>> &m)
+{
+    for (int i = 0; i < m.size(); i++)
+    {
+        for (int j = 0; j < m[i].size(); j++)
+            cout << m[i][j] << '\t';
+        cout << endl;
+    }
+}
