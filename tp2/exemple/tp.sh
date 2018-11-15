@@ -14,7 +14,7 @@ case $key in
     EX_PATH="$2"
     shift
     ;;
-    -p|-t)
+    -p|-t|-s)
     OPTIONS="${OPTIONS}${1} "
     ;;
     *)
@@ -25,4 +25,8 @@ esac
 shift
 done
 
-python3 ./src/$ALGO.py $EX_PATH $OPTIONS
+if [ ! -f ./src/main.out ]; then
+    cd src && make && cd ..
+fi
+
+./src/main.out -a $ALGO -e $EX_PATH $OPTIONS

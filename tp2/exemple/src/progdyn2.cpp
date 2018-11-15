@@ -11,11 +11,11 @@ void solveProgDyn2(Problem &p, vector<int> &v)
         matrix[i][0] = 0;
     }
     for (int i = 0; i < p.numberOfSticks; i++)
-
     {
         for (int j = 1; j < p.weightLimit + 1; j++)
         {
             int firstIdx = j - p.sticks[i].second;
+            // Handle overflow
             int first = firstIdx < 0 ? __INT_MAX__ : (matrix[i][firstIdx] == __INT_MAX__ ? __INT_MAX__ : 1 + matrix[i][firstIdx]);
 
             int secondIdx = i - 1;

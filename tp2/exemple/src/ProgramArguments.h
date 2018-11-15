@@ -12,6 +12,7 @@ class ProgramArguments
     string _filename;
     bool _isPrintResult = false;
     bool _isPrintTime = false;
+    bool _isPrintSum = false;
     bool _isValid = true;
     string _errorMessage;
     ProgramArguments(int argc, char *argv[]);

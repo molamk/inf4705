@@ -85,3 +85,12 @@ void printMatrix(vector<vector<int>> &m)
         cout << endl;
     }
 }
+
+int sumVector(vector<int> &v)
+{
+    int sum = 0;
+    for (int x : v)
+        sum += x;
+
+    return sum;
+}

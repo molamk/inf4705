@@ -21,5 +21,6 @@ void sortSticks(vector<pair<int, int>> &v);
 void printVector(vector<int> &v);
 void printSticks(vector<pair<int, int>> &v);
 void printMatrix(vector<vector<int>> &m);
+int sumVector(vector<int>  &v);
 
 #endif

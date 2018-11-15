@@ -2,6 +2,7 @@
 #include "glouton.h"
 #include "progdyn1.h"
 #include "progdyn2.h"
+#include "recuit.h"
 
 using namespace std;
 
@@ -33,6 +34,11 @@ int main(int argc, char *argv[])
             begin_time = clock();
             solveProgDyn2(p, result);
         }
+        else if (options._algorithm == "recuit")
+        {
+            begin_time = clock();
+            solveRecuit(p, result);
+        }
 
         double duration = (double(clock() - begin_time) / CLOCKS_PER_SEC);
 
@@ -43,18 +49,13 @@ int main(int argc, char *argv[])
         if (options._isPrintTime)
             cout << fixed << (duration * 1000) << endl;
 
-        int sum = 0;
-        cout << endl
-             << "Number:\t" << p.numberOfSticks << endl;
-        cout << "Target:\t" << p.weightLimit << endl
-             << endl;
-        for (int r : result)
+        if (options._isPrintSum)
         {
-            cout << "Idx:\t" << p.sticks[r - 1].first << "\tWeight:\t" << p.sticks[r - 1].second << endl;
-            sum += p.sticks[r - 1].second;
+            int sum = 0;
+            for (size_t i = 0; i < result.size(); i++)
+                sum += p.sticks[result[i] - 1].second;
+            cout << sum << endl;
         }
-        cout << endl
-             << "Sum:\t" << sum << "\tTotal::\t" << result.size() << endl;
     }
     else
         cout << options._errorMessage << endl;

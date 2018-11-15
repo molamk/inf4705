@@ -53,4 +53,7 @@ ProgramArguments::ProgramArguments(int argc, char *argv[])
 
     // Print time
     _isPrintTime = getFlagIndex(argc, argv, "-t") != -1;
+
+    // Print sum
+    _isPrintSum = getFlagIndex(argc, argv, "-s") != -1;
 };
