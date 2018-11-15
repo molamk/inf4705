@@ -41,6 +41,8 @@ def format_file_name(filename):
 
 
 def format_line(line, algo):
+    # print(algo)
+    # print(line)
     parts = line.split(' ')
     r = Result()
 
@@ -48,23 +50,11 @@ def format_line(line, algo):
     r.target_weight = int(parts[0])
     r.actual_weight = int(parts[3])
     r.duration = float(parts[2])
-    r.number_order, r.weight_order, r.ex = format_file_name(parts[1])
+    r.number_order, r.weight_order, r.exemplary = format_file_name(parts[1])
+
+    # print(r)
 
     return r
-
-
-def build_algo_map(results):
-    algo_map = {}
-    for r in results:
-        key = r.get_mean_key()
-        current_arr = (r.get_relative_distance(), r.duration)
-
-        if key not in algo_map:
-            algo_map[key] = []
-
-        algo_map[key].append(current_arr)
-
-    return algo_map
 
 
 def get_results_for_algo(algo):
@@ -74,47 +64,30 @@ def get_results_for_algo(algo):
         return list(map(lambda l: format_line(l, algo), lines))
 
 
-def generate_means(algo_map):
-    for k in algo_map:
-        deviations = []
-        durations = []
-
-        for x in algo_map[k]:
-            deviations.append(x[0])
-            durations.append(x[1])
-
-        algo_map[k] = (round(sum(deviations) / len(deviations), 3),
-                       round(sum(durations) / len(durations), 3))
-
-    return algo_map
-
-
-def format_line_width(line, width=16):
-    l = list(str(line))
-    for i in range(len(l), width):
-        l.append('0')
-    return ''.join(l)
-
-
 if __name__ == "__main__":
-    algos = ['glouton', 'progdyn1', 'progdyn2']
+    algos = ['glouton', 'progdyn1', 'progdyn2', 'recuit']
 
     for algo in algos:
         results = get_results_for_algo(algo)
 
+        if algo == 'glouton':
+            for r in results:
+                if r.target_weight < r.actual_weight:
+                    print(f'{algo}_{r.get_median_key()}')
+
         # Median step here
 
-        algo_map = build_algo_map(results)
-        means_map = generate_means(algo_map)
+        # algo_map = build_algo_map(results)
+        # means_map = generate_means(algo_map)
 
-        print('*' * 62)
-        print(f'\t\t\t{algo.upper()}')
-        print('*' * 62)
-        print('n\t\tm\t\tEcart moyen\tDuree moyenne\t\t')
-        print('*' * 62)
-        for k in means_map:
-            k_parts = k.split('_')
-            dev = format_line_width(means_map[k][0], 6)
-            print(
-                f'{k_parts[0]}\t\t{k_parts[1]}\t\t{dev} %\t\t{means_map[k][1]}')
-        print('\n')
+        # print('*' * 62)
+        # print(f'\t\t\t{algo.upper()}')
+        # print('*' * 62)
+        # print('n\t\tm\t\tEcart moyen\tDuree moyenne\t\t')
+        # print('*' * 62)
+        # for k in means_map:
+        #     k_parts = k.split('_')
+        #     dev = format_line_width(means_map[k][0], 6)
+        #     print(
+        #         f'{k_parts[0]}\t\t{k_parts[1]}\t\t{dev} %\t\t{means_map[k][1]}')
+        # print('\n')

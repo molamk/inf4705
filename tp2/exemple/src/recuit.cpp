@@ -24,8 +24,6 @@ vector<int> recuit(
     vector<int> s = s0;
     vector<int> betterSolution = s;
     vector<int> sPrime;
-    std::vector<int> hello_vector(5);
-    std::cout << hello_vector.size() << std::endl;
 
     double theta = T;
     for (int k = 1; k < kmax; k++)

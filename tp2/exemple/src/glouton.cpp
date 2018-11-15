@@ -2,15 +2,16 @@
 
 void solveGreedy(Problem &p, vector<int> &v)
 {
-    sortSticks(p.sticks);
+    vector<pair<int, int>> s = p.sticks;
+    sortSticks(s);
     int weightLimit = p.weightLimit;
 
     for (int i = 0; i < p.numberOfSticks; i++)
     {
-        if (p.sticks[i].second < weightLimit)
+        if (s[i].second < weightLimit)
         {
-            weightLimit -= p.sticks[i].second;
-            v.push_back(p.sticks[i].first);
+            weightLimit -= s[i].second;
+            v.push_back(s[i].first);
         }
     }
 }
