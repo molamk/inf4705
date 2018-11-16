@@ -1,5 +1,4 @@
 #include "progdyn1.h"
-#include "array"
 
 void backTrack(int idx,
                int *indeces,
