@@ -20,6 +20,12 @@ void solveProgDyn1(Problem &p, vector<int> &v)
     int *indeces = (int *)malloc(sizeof(int) * p.weightLimit);
 
     for (int i = 0; i < p.weightLimit; i++)
+    {
+        numbersOfSticks[i] = 0;
+        indeces[i] = 0;
+    }
+
+    for (int i = 0; i < p.weightLimit; i++)
         numbersOfSticks[i] = __INT_MAX__;
 
     for (int i = 0; i < p.numberOfSticks; i++)
