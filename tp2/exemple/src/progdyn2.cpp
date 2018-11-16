@@ -4,6 +4,8 @@ void solveProgDyn2(Problem &p, vector<int> &v)
 {
     // Initialiser le tableau 2D
     int *matrix = (int *)malloc(sizeof(int) * p.numberOfSticks * p.weightLimit);
+    for (int i = 0; i < p.numberOfSticks * p.weightLimit; i++)
+        matrix[i] = 0;
     // int **matrix = (int **)malloc(sizeof(int *) * p.numberOfSticks);
     // for (int x = 0; x < p.numberOfSticks; x++)
     //     matrix[x] = (int *)calloc(p.weightLimit, sizeof(int));
