@@ -1,5 +1,8 @@
 #!/bin/bash
 
+rm -f *.results
+rm -f stats.txt
+
 for algo in "glouton" "progdyn1" "progdyn2" "recuit"; do
     iterations='1'
     
@@ -27,3 +30,4 @@ for algo in "glouton" "progdyn1" "progdyn2" "recuit"; do
 done
 
 cd src && ./stats.py > ../stats.txt && cd ..
+echo "Le fichier des statistiques est dans stats.txt"
