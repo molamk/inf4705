@@ -3,14 +3,15 @@
 void solveProgDyn2(Problem &p, vector<int> &v)
 {
     // Initialiser le tableau 2D
-    int **matrix = (int **)malloc(sizeof(int *) * p.numberOfSticks);
-    for (int x = 0; x < p.numberOfSticks; x++)
-        matrix[x] = (int *)calloc(p.weightLimit, sizeof(int));
+    int *matrix = (int *)malloc(sizeof(int) * p.numberOfSticks * p.weightLimit);
+    // int **matrix = (int **)malloc(sizeof(int *) * p.numberOfSticks);
+    // for (int x = 0; x < p.numberOfSticks; x++)
+    //     matrix[x] = (int *)calloc(p.weightLimit, sizeof(int));
 
     for (int i = 0; i < p.numberOfSticks; i++)
     {
-        matrix[i][p.sticks[i].second] = 1;
-        matrix[i][0] = 0;
+        matrix[i * p.numberOfSticks + p.sticks[i].second] = 1;
+        matrix[i * p.numberOfSticks + 0] = 0;
     }
 
     for (int i = 0; i < p.numberOfSticks; i++)
@@ -19,12 +20,12 @@ void solveProgDyn2(Problem &p, vector<int> &v)
         {
             int firstIdx = j - p.sticks[i].second;
             // Handle overflow
-            int first = firstIdx < 0 ? __INT_MAX__ : (matrix[i][firstIdx] == __INT_MAX__ ? __INT_MAX__ : 1 + matrix[i][firstIdx]);
+            int first = firstIdx < 0 ? __INT_MAX__ : (matrix[i * p.numberOfSticks + firstIdx] == __INT_MAX__ ? __INT_MAX__ : 1 + matrix[i * p.numberOfSticks + firstIdx]);
 
             int secondIdx = i - 1;
-            int second = secondIdx < 0 ? __INT_MAX__ : matrix[secondIdx][j];
+            int second = secondIdx < 0 ? __INT_MAX__ : matrix[secondIdx * p.numberOfSticks + j];
 
-            matrix[i][j] = first < second ? first : second;
+            matrix[i * p.numberOfSticks + j] = first < second ? first : second;
         }
     }
 
@@ -35,10 +36,10 @@ void solveProgDyn2(Problem &p, vector<int> &v)
     while (i >= 0 && j >= 0)
     {
         int leftIdx = j - p.sticks[i].second;
-        int left = leftIdx < 0 ? __INT_MAX__ : (matrix[i][leftIdx] == __INT_MAX__ ? __INT_MAX__ : 1 + matrix[i][leftIdx]);
+        int left = leftIdx < 0 ? __INT_MAX__ : (matrix[i * p.numberOfSticks + leftIdx] == __INT_MAX__ ? __INT_MAX__ : 1 + matrix[i * p.numberOfSticks + leftIdx]);
 
         int topIdx = i - 1;
-        int top = topIdx < 0 ? __INT_MAX__ : matrix[topIdx][j];
+        int top = topIdx < 0 ? __INT_MAX__ : matrix[topIdx * p.numberOfSticks + j];
 
         if (left == __INT_MAX__ && left == top)
             break;
@@ -56,5 +57,5 @@ void solveProgDyn2(Problem &p, vector<int> &v)
         i--;
     }
 
-    delete matrix;
+    free(matrix);
 }

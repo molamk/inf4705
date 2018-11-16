@@ -16,8 +16,8 @@ void backTrack(int idx,
 
 void solveProgDyn1(Problem &p, vector<int> &v)
 {
-    int *numbersOfSticks = new int[p.weightLimit];
-    int *indeces = new int[p.weightLimit];
+    int *numbersOfSticks = (int *)malloc(sizeof(int) * p.weightLimit);
+    int *indeces = (int *)malloc(sizeof(int) * p.weightLimit);
 
     for (int i = 0; i < p.weightLimit; i++)
         numbersOfSticks[i] = __INT_MAX__;
@@ -49,6 +49,6 @@ void solveProgDyn1(Problem &p, vector<int> &v)
 
     backTrack(startIdx, indeces, p.sticks, v);
 
-    delete numbersOfSticks;
-    delete indeces;
+    free(numbersOfSticks);
+    free(indeces);
 }
