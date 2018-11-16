@@ -20,6 +20,11 @@ vector<int> recuit(
     int P,
     double a);
 
-void solveRecuit(Problem &p, vector<int> &v);
+void solveRecuit(Problem &p,
+                 vector<int> &v,
+                 double T,
+                 int kmax,
+                 int P,
+                 double a);
 
 #endif // RECUIT_H

@@ -1,14 +1,14 @@
 #include "recuit.h"
 
-void solveRecuit(Problem &p, vector<int> &result)
+void solveRecuit(Problem &p,
+                 vector<int> &result,
+                 double T,
+                 int kmax,
+                 int P,
+                 double a)
 {
     vector<int> s0;
     solveGreedy(p, s0);
-
-    double T = 100;
-    int kmax = 10;
-    int P = 10;
-    double a = .5;
 
     result = recuit(p, s0, T, kmax, P, a);
 }

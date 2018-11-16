@@ -125,24 +125,29 @@ def generate_means(mean_map):
     return mean_map
 
 
-def format_line_width(line, width=16):
+def format_line_width(line, width=16, filler=' '):
     l = list(str(line))
     for i in range(len(l), width):
-        l.append('0')
+        l.append(filler)
     return ''.join(l)
+
+
+def format_block(arr):
+    b = list(map(format_line_width, arr))
+    return ''.join(b)
 
 
 def print_result(algo, mean_map):
     print('*' * 62)
-    print(f'\t\t\t{algo.upper()}')
+    pref = ' ' * 25
+    print(f'{pref}{algo.upper()}')
     print('*' * 62)
-    print('n\t\tm\t\tEcart moyen\tDuree moyenne\t\t')
+    print(format_block(['n', 'm', 'Ecart moyen', 'Duree moyenne']))
     print('*' * 62)
     for k in mean_map:
         k_parts = k.split('_')
-        dev = format_line_width(mean_map[k][0], 6)
-        print(
-            f'{k_parts[0]}\t\t{k_parts[1]}\t\t{dev} %\t\t{mean_map[k][1]}')
+        dev = format_line_width(mean_map[k][0], 6, '0')
+        print(format_block([k_parts[0], k_parts[1], dev, mean_map[k][1]]))
     print('\n')
 
 
@@ -157,20 +162,3 @@ if __name__ == "__main__":
         mean_map = generate_means(mean_map)
 
         print_result(algo, mean_map)
-
-        # Median step here
-
-        # algo_map = build_algo_map(results)
-        # means_map = generate_means(algo_map)
-
-        # print('*' * 62)
-        # print(f'\t\t\t{algo.upper()}')
-        # print('*' * 62)
-        # print('n\t\tm\t\tEcart moyen\tDuree moyenne\t\t')
-        # print('*' * 62)
-        # for k in means_map:
-        #     k_parts = k.split('_')
-        #     dev = format_line_width(means_map[k][0], 6)
-        #     print(
-        #         f'{k_parts[0]}\t\t{k_parts[1]}\t\t{dev} %\t\t{means_map[k][1]}')
-        # print('\n')

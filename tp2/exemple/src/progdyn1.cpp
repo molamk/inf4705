@@ -1,7 +1,8 @@
 #include "progdyn1.h"
+#include "array"
 
 void backTrack(int idx,
-               vector<int> &indeces,
+               int *indeces,
                vector<pair<int, int>> &inputSticks,
                vector<int> &result)
 {
@@ -16,8 +17,8 @@ void backTrack(int idx,
 
 void solveProgDyn1(Problem &p, vector<int> &v)
 {
-    vector<int> numbersOfSticks(p.weightLimit);
-    vector<int> indeces(p.weightLimit);
+    int *numbersOfSticks = new int[p.weightLimit];
+    int *indeces = new int[p.weightLimit];
 
     for (int i = 0; i < p.weightLimit; i++)
         numbersOfSticks[i] = __INT_MAX__;
@@ -30,7 +31,9 @@ void solveProgDyn1(Problem &p, vector<int> &v)
 
     for (int j = 0; j < p.weightLimit; j++)
         if (numbersOfSticks[j] != 1)
-            for (int i = 0; i < (int)(j / 2); i++)
+        {
+            int halfJ = j / 2;
+            for (int i = 0; i < halfJ; i++)
                 if (numbersOfSticks[j] > numbersOfSticks[i] + numbersOfSticks[j - i] &&
                     // Handle overflow
                     numbersOfSticks[i] != __INT_MAX__ && numbersOfSticks[j - i] != __INT_MAX__)
@@ -38,6 +41,7 @@ void solveProgDyn1(Problem &p, vector<int> &v)
                     numbersOfSticks[j] = numbersOfSticks[i] + numbersOfSticks[j - i];
                     indeces[j] = (i + 1);
                 }
+        }
 
     int startIdx = p.weightLimit - 1;
 
@@ -45,4 +49,7 @@ void solveProgDyn1(Problem &p, vector<int> &v)
         startIdx--;
 
     backTrack(startIdx, indeces, p.sticks, v);
+
+    delete numbersOfSticks;
+    delete indeces;
 }

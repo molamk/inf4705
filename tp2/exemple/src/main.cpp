@@ -36,8 +36,12 @@ int main(int argc, char *argv[])
         }
         else if (options._algorithm == "recuit")
         {
+            double T = 5;
+            int kmax = 5;
+            int P = 100;
+            double a = .2;
             begin_time = clock();
-            solveRecuit(p, result);
+            solveRecuit(p, result, T, kmax, P, a);
         }
 
         double duration = (double(clock() - begin_time) / CLOCKS_PER_SEC);
