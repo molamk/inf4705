@@ -2,14 +2,17 @@
 
 void solveProgDyn2(Problem &p, vector<int> &v)
 {
-    vector<int> inner(p.weightLimit + 1);
-    vector<vector<int>> matrix(p.numberOfSticks, inner);
+    // Initialiser le tableau 2D
+    int **matrix = (int **)malloc(sizeof(int *) * p.numberOfSticks);
+    for (int x = 0; x < p.numberOfSticks; x++)
+        matrix[x] = (int *)calloc(p.weightLimit, sizeof(int));
 
     for (int i = 0; i < p.numberOfSticks; i++)
     {
         matrix[i][p.sticks[i].second] = 1;
         matrix[i][0] = 0;
     }
+
     for (int i = 0; i < p.numberOfSticks; i++)
     {
         for (int j = 1; j < p.weightLimit + 1; j++)
@@ -21,7 +24,7 @@ void solveProgDyn2(Problem &p, vector<int> &v)
             int secondIdx = i - 1;
             int second = secondIdx < 0 ? __INT_MAX__ : matrix[secondIdx][j];
 
-            matrix[i][j] = min(first, second);
+            matrix[i][j] = first < second ? first : second;
         }
     }
 
@@ -52,4 +55,6 @@ void solveProgDyn2(Problem &p, vector<int> &v)
         // Donc on monte!
         i--;
     }
+
+    delete matrix;
 }
