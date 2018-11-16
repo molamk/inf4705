@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 for algo in "glouton" "progdyn1" "progdyn2" "recuit"; do
     iterations='1'
     
@@ -26,3 +25,5 @@ for algo in "glouton" "progdyn1" "progdyn2" "recuit"; do
         done
     done
 done
+
+cd src && ./stats.py > ../stats.txt && cd ..
