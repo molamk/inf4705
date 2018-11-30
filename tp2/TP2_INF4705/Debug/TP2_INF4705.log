@@ -1,0 +1,6 @@
+﻿  main.cpp
+c:\users\fatio\documents\github\inf4705\tp2\tp2_inf4705\main.cpp(117): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\users\fatio\documents\github\inf4705\tp2\tp2_inf4705\main.cpp(182): warning C4018: '<': signed/unsigned mismatch
+c:\users\fatio\documents\github\inf4705\tp2\tp2_inf4705\main.cpp(183): warning C4018: '<': signed/unsigned mismatch
+c:\users\fatio\documents\github\inf4705\tp2\tp2_inf4705\main.cpp(261): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+  TP2_INF4705.vcxproj -> C:\Users\fatio\Documents\GitHub\inf4705\tp2\TP2_INF4705\Debug\TP2_INF4705.exe

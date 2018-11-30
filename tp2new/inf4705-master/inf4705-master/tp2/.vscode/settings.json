@@ -1,0 +1,8 @@
+{
+    "python.linting.pylintEnabled": false,
+    "files.associations": {
+        "ostream": "cpp",
+        "iostream": "cpp"
+    },
+    "python.pythonPath": "/usr/bin/python3"
+}
