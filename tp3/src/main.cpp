@@ -1,6 +1,7 @@
 #include "utils.h"
 #include "greedy.h"
 #include "recuit.h"
+#include <time.h>
 
 int main()
 {
